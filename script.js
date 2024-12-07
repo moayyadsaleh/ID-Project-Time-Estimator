@@ -1,15 +1,15 @@
 const taskBenchmarks = {
-  contentAnalysis: { simple: 2, moderate: 3, complex: 4 },
-  storyboarding: { simple: 3, moderate: 5, complex: 7 },
-  slideDevBasic: { simple: 2, moderate: 3, complex: 4 },
-  slideDevInteractive: { simple: 6, moderate: 8, complex: 12 },
-  videoProduction: { simple: 10, moderate: 15, complex: 20 },
-  qualityAssurance: { simple: 1, moderate: 2, complex: 3 },
-  projectManagement: { simple: 1, moderate: 2, complex: 3 },
-  scriptwriting: { simple: 4, moderate: 6, complex: 8 },
-  gamificationDevelopment: { simple: 8, moderate: 12, complex: 16 },
-  accessibilityCompliance: { simple: 3, moderate: 5, complex: 7 },
-  audioEditing: { simple: 3, moderate: 5, complex: 7 },
+  contentAnalysis: { simple: 3, moderate: 5, complex: 7 }, // 2-3, 4-6, 6-8
+  storyboarding: { simple: 4, moderate: 7, complex: 10 }, // 3-5, 5-8, 8-12
+  slideDevBasic: { simple: 3, moderate: 5, complex: 7 }, // 2-4, 4-6, 6-8
+  slideDevInteractive: { simple: 5, moderate: 8, complex: 12 }, // 4-6, 6-10, 10-15
+  videoProduction: { simple: 15, moderate: 30, complex: 50 }, // 10-20, 20-40, 40-60
+  qualityAssurance: { simple: 2, moderate: 3, complex: 5 }, // 1-2, 2-4, 4-6
+  projectManagement: { simple: 2, moderate: 3, complex: 5 }, // 1-2, 2-4, 4-6
+  scriptwriting: { simple: 3, moderate: 5, complex: 7 }, // 2-4, 4-6, 6-8
+  gamificationDevelopment: { simple: 10, moderate: 16, complex: 30 }, // 8-12, 12-20, 20-40
+  accessibilityCompliance: { simple: 4, moderate: 6, complex: 8 }, // 3-5, 5-7, 7-10
+  audioEditing: { simple: 3, moderate: 5, complex: 7 }, // 2-3, 3-5, 5-8
 };
 
 const taskList = [];
@@ -26,12 +26,17 @@ document.getElementById("exportBtn").addEventListener("click", exportToPDF);
 taskDropdown.addEventListener("change", updateUnitLabel);
 
 function addTask() {
-  const task = document.getElementById("task").value;
-  const numUnits = parseInt(document.getElementById("numUnits").value) || 0;
-  const complexity = document.getElementById("complexity").value;
-  const customTaskName = document.getElementById("customTask").value;
-  const customTaskTime =
-    parseInt(document.getElementById("customTime").value) || 0;
+  const taskDropdown = document.getElementById("task");
+  const numUnitsInput = document.getElementById("numUnits");
+  const complexityDropdown = document.getElementById("complexity");
+  const customTaskNameInput = document.getElementById("customTask");
+  const customTaskTimeInput = document.getElementById("customTime");
+
+  const task = taskDropdown.value;
+  let numUnits = parseInt(numUnitsInput.value) || 0;
+  const complexity = complexityDropdown.value;
+  const customTaskName = customTaskNameInput.value;
+  const customTaskTime = parseInt(customTaskTimeInput.value) || 0;
 
   if (customTaskName && customTaskTime > 0) {
     taskList.push({
@@ -47,8 +52,16 @@ function addTask() {
     taskList.push({ task, numUnits, complexity, totalTaskTime });
   }
 
+  // Reset the form fields after adding a task
+  taskDropdown.selectedIndex = 0;
+  numUnitsInput.value = 0;
+  complexityDropdown.selectedIndex = 0;
+  customTaskNameInput.value = "";
+  customTaskTimeInput.value = "";
+
   displayTaskList();
 }
+
 // Update the displayTaskList function to include chart rendering
 function displayTaskList() {
   taskListElement.innerHTML = "";
@@ -169,6 +182,8 @@ function updateUnitLabel() {
 
   switch (task) {
     case "contentAnalysis":
+      unitText = "Number of Pages:";
+      break;
     case "storyboarding":
     case "slideDevBasic":
     case "slideDevInteractive":
@@ -181,13 +196,26 @@ function updateUnitLabel() {
     case "projectManagement":
       unitText = "Number of Hours:";
       break;
+    case "scriptwriting":
+      unitText = "Number of Pages:";
+      break;
+    case "gamificationDevelopment":
+      unitText = "Number of Game Elements:";
+      break;
+    case "accessibilityCompliance":
+      unitText = "Number of Checks:";
+      break;
+    case "audioEditing":
+      unitText = "Audio Length (in Minutes):";
+      break;
   }
 
   unitLabel.textContent = unitText;
 }
 
 function formatTaskName(task) {
-  return task.replace(/([A-Z])/g, " $1").trim();
+  const formatted = task.replace(/([A-Z])/g, " $1").trim();
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
 }
 
 function capitalizeFirstLetter(string) {
