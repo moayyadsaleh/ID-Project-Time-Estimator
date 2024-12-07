@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ID Project Time Estimator</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <p>
+      <i class="fas fa-info-circle"></i>
+      This app is designed to help instructional designers accurately estimate
+      project development time based on established industry benchmarks. The
+      calculations consider various tasks like content analysis, storyboarding,
+      slide development, and video production, each broken down by complexity
+      level (simple, moderate, or complex). By using these benchmarks, the app
+      provides realistic estimates, helping you plan your projects efficiently
+      and avoid unexpected delays. Just plug in your tasks, number of units, and
+      complexity levels — and let the app handle the math!
+    </p>
+
+    <div class="app-wrapper">
+      <div class="container">
+        <h1 class="main-title">
+          <i class="fas fa-clock"></i> Training Development Time Estimator
+        </h1>
+
+        <form id="timeEstimatorForm">
+          <div class="form-group">
+            <label for="task"><i class="fas fa-tasks"></i> Select Task:</label>
+            <select id="task">
+              <option value="contentAnalysis">Content Analysis</option>
+              <option value="storyboarding">Storyboarding</option>
+              <option value="slideDevBasic">Slide Development (Basic)</option>
+              <option value="slideDevInteractive">
+                Slide Development (Interactive)
+              </option>
+              <option value="videoProduction">Video Production</option>
+              <option value="qualityAssurance">Quality Assurance</option>
+              <option value="projectManagement">Project Management</option>
+              <option value="scriptwriting">Scriptwriting</option>
+              <option value="gamificationDevelopment">
+                Gamification Development
+              </option>
+              <option value="accessibilityCompliance">
+                Accessibility Compliance Check
+              </option>
+              <option value="audioEditing">
+                Audio Editing or Voiceover Recording
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label id="unitLabel" for="numUnits">
+              <i class="fas fa-hashtag"></i> Number of Units:
+            </label>
+            <input type="number" id="numUnits" min="0" value="0" />
+          </div>
+
+          <div class="form-group">
+            <label for="complexity">
+              <i class="fas fa-layer-group"></i> Select Complexity Level:
+            </label>
+            <select id="complexity">
+              <option value="simple">Simple</option>
+              <option value="moderate">Moderate</option>
+              <option value="complex">Complex</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="customTask">
+              <i class="fas fa-pen"></i> Add Custom Task (Optional):
+            </label>
+            <input type="text" id="customTask" placeholder="Task Name" />
+            <input type="number" id="customTime" placeholder="Time in Hours" />
+          </div>
+
+          <div class="form-group">
+            <label for="contingency">
+              <i class="fas fa-percent"></i> Add Contingency Time:
+            </label>
+            <select id="contingency">
+              <option value="0">None</option>
+              <option value="10">10%</option>
+              <option value="20">20%</option>
+            </select>
+          </div>
+
+          <div class="button-group">
+            <button type="button" id="addTaskBtn" class="icon-button">
+              <i class="fas fa-plus"></i> Add Task
+            </button>
+            <button type="button" id="calculateBtn" class="primary-button">
+              <i class="fas fa-calculator"></i> Calculate Total Time
+            </button>
+          </div>
+        </form>
+
+        <h2><i class="fas fa-list-ul"></i> Task Breakdown</h2>
+        <ul id="taskList"></ul>
+
+        <h2>
+          <i class="fas fa-hourglass-end"></i> Total Estimated Time:
+          <span id="totalTime">0 hours</span>
+        </h2>
+
+        <button id="exportBtn" class="export-button">
+          <i class="fas fa-file-pdf"></i> Export to PDF
+        </button>
+      </div>
+
+      <div class="chart-container">
+        <h2><i class="fas fa-chart-pie"></i> Task Time Breakdown</h2>
+        <canvas id="taskPieChart" width="400" height="400"></canvas>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
