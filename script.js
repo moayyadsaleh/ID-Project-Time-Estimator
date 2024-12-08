@@ -114,7 +114,7 @@ function exportToPDF() {
   // Title
   doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
-  doc.text("Training Development Time Estimation", margin, y);
+  doc.text("Training Development Project Time Estimation", margin, y);
   y += 10;
 
   // Date
